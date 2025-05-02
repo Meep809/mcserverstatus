@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Minecraft Server Status</title>
+  <style>
+    body { font-family: Arial, sans-serif; text-align: center; padding-top: 50px; }
+    #status { font-size: 24px; }
+  </style>
+</head>
+<body>
+  <h1>Minecraft Server Status</h1>
+  <p id="status">Checking...</p>
+
+  <script>
+    const serverIP = "your.server.ip"; // e.g. play.example.com
+    fetch(`https://api.mcsrvstat.us/2/${serverIP}`)
+      .then(res => res.json())
+      .then(data => {
+        const statusEl = document.getElementById('status');
+        if (data.online) {
+          statusEl.textContent = `Online - ${data.players.online} players online`;
+        } else {
+          statusEl.textContent = 'Offline';
+        }
+      })
+      .catch(() => {
+        document.getElementById('status').textContent = 'Error checking status';
+      });
+  </script>
+</body>
+</html>
